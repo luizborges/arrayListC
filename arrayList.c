@@ -8,13 +8,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Private Functions Head
 ////////////////////////////////////////////////////////////////////////////////
-static void  ArrayList_Error(const char *func, const int line);
-static void  ArrayList_Print(const arrayList_t list, const int pos, const char *func, const int line);
+static void  ArrayList_Error(const arrayList_t list, const int line);
+//static void  ArrayList_Print(const arrayList_t list, const int pos, const char *func, const int line);
 static int   ArrayList_Position_Especial(const arrayList_t list, const int pos);
-static void  ArrayList_Check(const arrayList_t list, const int pos, const char *func);
+static void  ArrayList_Check(const arrayList_t list, const int pos);
 static void  ArrayList_Position(const arrayList_t list, const int pos);
-static void  ArrayList_Create_First_Cell(arrayList_t list, const char *func);
-static void  ArrayList_Create_Cell(arrayList_t list, const int pos, const char *func);
+static void  ArrayList_Create_Last_Cell(arrayList_t list, const int pos);
 static void *ArrayList_Delete_Cell(arrayList_t list, const int pos);
 
 
@@ -22,11 +21,16 @@ static void *ArrayList_Delete_Cell(arrayList_t list, const int pos);
 // Private Functions
 ////////////////////////////////////////////////////////////////////////////////
 static void
-ArrayList_Error(const char *func, const int line) {
-	printf("ERROR - Func: \"%s\" - Line: %d\n", func, line);
+ArrayList_Error(const arrayList_t list, const int line) {
+  if(list == NULL) {
+    fprintf(stderr, "ERROR: - Func: \"ArrayList_New\" - Line: %d\n", line);
+  } else {
+	  fprintf(stderr, "ERROR - Func: \"%s\" - Line: %d\n", list->func, line);
+	}
 	abort();
 }
 
+/*
 static void
 ArrayList_Print(const arrayList_t list, const int pos,
 				const char *func, const int line) {
@@ -34,32 +38,36 @@ ArrayList_Print(const arrayList_t list, const int pos,
             "| Line: %d | cell: %p | head->next: %p | tail: %p\n",
 		list->pos, list->len, pos, func, line, list->cell, 
         list->head->next, list->tail);
-}
-
+} */
 
 static void 
-ArrayList_Check(const arrayList_t list, const int pos, const char *func) {
+ArrayList_Check(const arrayList_t list, const int pos) {
     // check list integridade
-    if(list == NULL) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
-    if(list->len < 0) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
-    if(list->head == NULL) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
-    if(list->tail == NULL) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
-    if(list->len == 0 && list->head != list->tail) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
-    if(list->pos != -1 && list->cell == NULL) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
-    if(list->pos == -1 && list->cell != NULL) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
-    if(list->pos < -1) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
-    if(list->pos >= list->len) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
+    if(list == NULL) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->len < 0) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->head == NULL) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->head->prev != NULL) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->tail == NULL) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->tail->next != NULL) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__);} 
+    if(list->len == 0 && list->head->next != list->tail) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->len == 0 && list->tail->prev != list->head) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->len == 0 && list->pos != -1) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->pos != -1 && list->cell == NULL) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->pos == -1 && list->cell != NULL) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->pos < -1) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
+    if(list->pos >= list->len) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
 
     // checa posicao integridade
-    if(pos < 0) {/* ERROR MSG*/ ArrayList_Error(func, __LINE__); }
+    if(pos < 0) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); }
 }
 
 static int
 ArrayList_Position_Especial(const arrayList_t list, const int pos) {
-  if(list->len == 0)   return 1; // checa se a lista está vazia
-  if(list->len == 1)   return 1; // checa se a lista tem somente 1 elemento
   if(list->pos == pos) return 1; // quando a posição requerida é a posição de referência
   
+  if(list->len == 0) { // checa se a lista está vazia
+    ArrayList_Error(list, __LINE__);
+  }
   
   if(pos == 0) { // check se é a posição inicial do arranjo
     list->cell = list->head->next;
@@ -68,7 +76,7 @@ ArrayList_Position_Especial(const arrayList_t list, const int pos) {
   }
   
   if(pos == list->len -1) { // check se é a última célula do arranjo
-    list->cell = list->tail;
+    list->cell = list->tail->prev;
     list->pos  = pos;
     return 1;
   }
@@ -92,7 +100,7 @@ ArrayList_Position_Especial(const arrayList_t list, const int pos) {
   }
   
   if(pos == list->len -2) { // se é a penúltima célula do arranjo
-    list->cell = list->tail->prev;
+    list->cell = list->tail->prev->prev;
     list->pos  = pos;
     return 1;
   }
@@ -120,8 +128,8 @@ ArrayList_Position(const arrayList_t list, const int pos) {
   switch(is) { // seta o item atual para o mais próximo e a posicão dele na lista
     case  0: break;
     case  1: list->cell = list->head->next; list->pos = 0; break;
-    case -1: list->cell = list->tail; list->pos = list->len -1; break;
-    default: /*ERROR*/ abort();
+    case -1: list->cell = list->tail->prev; list->pos = list->len -1; break;
+    default: /*ERROR*/ ArrayList_Error(list, __LINE__);
   }
 
   // seta ao item escolhido
@@ -137,59 +145,46 @@ ArrayList_Position(const arrayList_t list, const int pos) {
 }
 
 static void
-ArrayList_Create_First_Cell(arrayList_t list, const char *func) {
-	if(list->len > 0) return; // check if cell is empty
-	
-	list->cell = malloc(sizeof(arrayList_cell_t));
-	if(list->cell == NULL) ArrayList_Error(func, __LINE__);
-	
-	list->cell->content = NULL; // seta como NULL o conteúdo da célula criada
-	
-	list->head->next = list->cell; // seta a primeira célula como sendo a próxima da cabeça
-	list->cell->next = NULL; // seta como null o fim da lista
-	list->cell->prev = list->head; // seta o ponteiro anterior para a célula cabeça
-	list->tail       = list->cell; // seta a lista final
-	list->pos				 = 0;
-	list->len			   = 1;
-}
-
-static void
-ArrayList_Create_Cell(arrayList_t list, const int pos, const char *func) {
-  if(pos < list->len) {return;} // check if is necessary to run the function
+ArrayList_Create_Last_Cell(arrayList_t list, const int pos) {
+  if(pos < list->len && list->len > 0) {return;} // check if is necessary to run the function
+  int i;
   
-  arrayList_cell_t *buff; // buffer temporário
-  for(; list->pos < pos; list->pos += 1) { // cria as novas células da lista
-    list->cell->next = malloc(sizeof(arrayList_cell_t));
-    if(list->cell->next == NULL) {/*ERROR*/ ArrayList_Error(func, __LINE__);}
-    buff = list->cell;
-    list->cell = list->cell->next; // atualiza a célula de referência
-    list->cell->prev = buff; // seta a célula prévia
-    list->cell->next = NULL; // seta a célula posterior
-    list->cell->content = NULL; // seta como NULL o conteúdo da célula criada
+  for(i = list->len -1; i < pos; ++i) {
+    list->cell = malloc(sizeof(arrayList_cell_t));
+    if(list->cell == NULL) {/*ERROR*/ ArrayList_Error(list, __LINE__);}
+    list->cell->content = NULL; // seta o contéudo da nova célula
+    list->cell->prev    = list->tail->prev; // seta a célula anterior a nova célula
+    list->cell->next    = list->tail; // seta a célula posterior a nova célula 
+    
+    list->tail->prev->next = list->cell; // insere a nova célula como sendo posterior à antiga célula anterior a célula tail
+    list->tail->prev       = list->cell; // insere a nova célula como sendo a célula anterior a célula tail
   }
-
-	list->tail = list->cell;
-  list->len = pos +1; // atualiza o numero de celulas da lista
+  
+  list->len = pos +1; // atualiza o novo tamanho da lista
+  list->pos = pos; // atualiza a nova posição da célula de referência
 }
 
 
 static void*
 ArrayList_Delete_Cell(arrayList_t list, const int pos) {
   if(pos >= list->len) {return NULL;} // check if is necessary to run the function
-  ArrayList_Position(list, pos); // pega a célula na posição que será removida
   
+  ArrayList_Position(list, pos); // pega a célula na posição que será removida
   arrayList_cell_t *cellDel = list->cell; // seta a célula que será removida
-  list->cell->prev = list->cell->next; // config a célula anterior a célula que será removida
-  if(list->cell->next != NULL) { // trata a lista quando a célula a ser removida não é a última
-    list->cell->next->prev = list->cell->prev; // config a célula posterior a célula que será removida
-    list->cell = list->cell->next; // config a nova célula de referência
-  } else { // trata a lista quando a célula a ser removida é a última célula da lista
-    list->tail = list->cell->prev; // config o ponteiro para a última célula da lista
-    list->cell = list->tail; // config a nova célula de referência
-    list->pos -= 1; // config o novo id da célula de referência
+  cellDel->prev->next = cellDel->next; // config a célula anterior a célula que será removida
+  cellDel->next->prev = cellDel->prev; // config a célula posterior a célula que será removida
+  
+  if(list->len == 1) { // quando a lista somente tem 1 elemento | lista vazia
+    list->cell = NULL;
+    list->pos  = -1;
+  } else if(pos == list->len -1) { // quando a célula removida for a última | lista NÃO vazia
+    list->cell = list->tail->prev; // a célula de referência se torna a última célula da lista
+    list->pos  = pos -1;
+  } else { // quando a célula removida não for a última  | lista NÃO vazia
+    list->cell = cellDel->next; // a célula de referência se torna a célula posterior a célula removida
   }
   
-  list->len -= 1; // config o novo tamanho da lista
+  list->len -= 1; // atualiza o tamanho da lista
   void *contentDel = cellDel->content; // guarda o conteúdo da célula quer será deletada
   free(cellDel); // remove a célula que será deletada
   return contentDel;
@@ -198,27 +193,44 @@ ArrayList_Delete_Cell(arrayList_t list, const int pos) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// Public Functions
+// Construct Functions
 ////////////////////////////////////////////////////////////////////////////////
 
 arrayList_t ArrayList_New() {
   arrayList_t list = malloc(sizeof(arrayList_to));
-  if(list == NULL) ArrayList_Error(__func__, __LINE__);
+  if(list == NULL) {ArrayList_Error(NULL, __LINE__);}
   
+  //////////////////////////////////////////////////////////////////////////////
   // cria a célula cabeça
+  //////////////////////////////////////////////////////////////////////////////
   arrayList_cell_t *cell = malloc(sizeof(arrayList_cell_t));
-  if(cell == NULL) {ArrayList_Error(__func__, __LINE__);}
+  if(cell == NULL) {ArrayList_Error(NULL, __LINE__);}
   
   cell->content = NULL;
-  cell->prev = NULL;
   cell->next = NULL;
-
-  // insere a célula cabeca
-  list->head = cell;
-  list->tail = cell;
-  list->len  = 0;
+  cell->prev = NULL;
+  
+  list->head = cell; // insere a célula cabeca
+  
+  //////////////////////////////////////////////////////////////////////////////
+  // cria a célula final - tail cell
+  //////////////////////////////////////////////////////////////////////////////
+  cell = malloc(sizeof(arrayList_cell_t));
+  if(cell == NULL) {ArrayList_Error(NULL, __LINE__);}
+  
+  cell->content = NULL;
+  cell->next = NULL;
+  cell->prev = list->head; // faz com que a célula prévia da final aponte para a cabeça
+  list->head->next = cell; // faz com que a célula cabeça aponte para a célula tail como sendo a próxima 
+  list->tail = cell; // seta a célula tail
+  
+  //////////////////////////////////////////////////////////////////////////////
+  // configurações gerais da lista
+  //////////////////////////////////////////////////////////////////////////////
+  list->len  = 0; // estabelece o tamanho da lista como zero
   list->cell = NULL;
-  list->pos  = -1;
+  list->pos  = -1; // estabelece que a célula de referência não está definida
+  strcpy(list->func, "ArrayList_New"); // grava a função entrada pela lista
 
   return list;
 }
@@ -230,8 +242,9 @@ arrayList_t ArrayList_New() {
  * Retorna o item do tipo
  */
 void *ArrayList_Get(const arrayList_t list, const int pos) {
-  ArrayList_Check(list, pos, __func__);
-  if(pos >= list->len) {/* ERROR MSG*/ ArrayList_Error(__func__, __LINE__); } // integridade do Get
+  strcpy(list->func, "ArrayList_Get"); // grava a função pública que chamou, para o caso de erro
+  ArrayList_Check(list, pos);
+  if(pos >= list->len) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); } // integridade do Get
   
   ArrayList_Position(list, pos);
   return list->cell->content;
@@ -241,19 +254,15 @@ void *ArrayList_Get(const arrayList_t list, const int pos) {
 void *ArrayList_Set(arrayList_t list,
                     const int pos,
                     const void *content) {
+  strcpy(list->func, "ArrayList_Set"); // grava a função pública que chamou, para o caso de erro
   void *lastContent = NULL;
-  ArrayList_Check(list, pos, __func__);
+  ArrayList_Check(list, pos);
   
-  if(list->len == 0) { // cria a primeira célula - lista vazia
-    ArrayList_Create_First_Cell(list, __func__);
-  } else { // quando a lista não está vazia
-    ArrayList_Position(list, pos);
-  }
-
   if(pos < list->len) { // verifica se é necessário criar novas células
+    ArrayList_Position(list, pos); // faz a célula referência estar na posição demandada
     lastContent = list->cell->content; // guarda o contéudo que será retornado
   } else { // cria novas células
-    ArrayList_Create_Cell(list, pos, __func__);
+    ArrayList_Create_Last_Cell(list, pos);
   }
   
   list->cell->content = (void*)content; // atualiza o conteúdo da nova célula
@@ -263,21 +272,13 @@ void *ArrayList_Set(arrayList_t list,
 void ArrayList_Add(arrayList_t list,
                    const int pos,
                    const void *content) {
-  ArrayList_Check(list, pos, __func__);
-  
-  if(list->len == 0) { // cria a primeira célula - lista vazia
-    ArrayList_Create_First_Cell(list, __func__);
-    list->cell->content = (void*)content; // seta o conteúdo na primeira célula
-    return;
-  }
-  //////////////////////////////////////////////////////////////////////////////
-  // quando a lista não está vazia
-  //////////////////////////////////////////////////////////////////////////////
-  ArrayList_Position(list, pos); // encontra a posição mais próxima
+  strcpy(list->func, "ArrayList_Add"); // grava a função pública que chamou, para o caso de erro
+  ArrayList_Check(list, pos);
 
-  if(pos < list->len) { // insere nova célula na posição
+  if(pos < list->len) { // insere nova célula em posição já existente
+    ArrayList_Position(list, pos); // encontra a posição mais próxima
     arrayList_cell_t *buff = malloc(sizeof(arrayList_cell_t)); // cria nova célula
-    if(list->cell == NULL) {ArrayList_Error(__func__, __LINE__);}
+    if(buff == NULL) {ArrayList_Error(list, __LINE__);}
     // configura a nova célula
     buff->next = list->cell; // seta o próximo item da nova célula
     buff->prev = list->cell->prev; // seta o item anterior da nova célula
@@ -290,7 +291,7 @@ void ArrayList_Add(arrayList_t list,
     list->pos  = pos;  // atualiza a posição da célula de referência
     list->len  += 1;   // atualiza o tamanho da lista
   } else { // quando a posição a ser criada é maior que o id da última célula da lista
-    ArrayList_Create_Cell(list, pos, __func__);
+    ArrayList_Create_Last_Cell(list, pos);
   }
   
   list->cell->content = (void*)content; // atualiza o conteúdo da célula
@@ -298,9 +299,10 @@ void ArrayList_Add(arrayList_t list,
 
 
 void *ArrayList_Del(const arrayList_t list, const int pos) {
-   ArrayList_Check(list, pos, __func__);
-   if(list->len == 0) {/* ERROR MSG*/ ArrayList_Error(__func__, __LINE__); } // se a lista está vazia
-   if(pos >= list->len) {/* ERROR MSG*/ ArrayList_Error(__func__, __LINE__); } // se a posição a ser deletada existe
+   strcpy(list->func, "ArrayList_Del"); // grava a função pública que chamou, para o caso de erro
+   ArrayList_Check(list, pos);
+   if(list->len == 0) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); } // se a lista está vazia
+   if(pos >= list->len) {/* ERROR MSG*/ ArrayList_Error(list, __LINE__); } // se a posição a ser deletada existe
    
    void *content = NULL; // célula que receberá o conteúdo de retorno da célula a ser deletada
    content = ArrayList_Delete_Cell(list, pos); // remove a célula da lista
@@ -314,18 +316,22 @@ void *ArrayList_Del(const arrayList_t list, const int pos) {
 }
 
 int ArrayList_Len(const arrayList_t list) {
-	ArrayList_Check(list, 0, __func__);
+  strcpy(list->func, "ArrayList_Len"); // grava a função pública que chamou, para o caso de erro
+	ArrayList_Check(list, 0);
 	return list->len;
 }
 
 void ArrayList_End_(arrayList_t list) {
-  ArrayList_Check(list, 0, __func__);
-  ArrayList_Position(list, 0); // seta a célula de referência para a primeira célula da lista
-  for(int i = 0; i < list->len; ++i) {
-    ArrayList_Delete_Cell(list, 0); // exclui sempre a primeira célula da lista
+  strcpy(list->func, "ArrayList_End"); // grava a função pública que chamou, para o caso de erro
+  ArrayList_Check(list, 0);
+  if(list->len > 0) { // check se a lista está vazia
+    ArrayList_Position(list, 0); // seta a célula de referência para a primeira célula da lista
+    for(int i = 0; i < list->len; ++i) {
+      ArrayList_Delete_Cell(list, 0); // exclui sempre a primeira célula da lista
+    }
   }
-  
   free(list->head); // remove a célula cabeça
+  free(list->tail); // remove a célula final/tail
   free(list); // remove a lista
 }
 
