@@ -1,0 +1,94 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/* 
+ * File:   interface.h
+ * Author: borges
+ *
+ * Created on Mar 25, 2019 PM
+ */
+
+#ifndef INTERFACE_H
+#define INTERFACE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+   
+///////////////////////////////////////////////////////////////
+////// include
+///////////////////////////////////////////////////////////////
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dlfcn.h>
+
+///////////////////////////////////////////////////////////////
+////// defines
+///////////////////////////////////////////////////////////////
+#define INTERFACE_MAX_NAME_FUNC_IMPL 1024
+ 
+#define PPCAT_NX(A, B) A ## B
+
+#define PPCAT(A, B) PPCAT_NX(A, B)
+
+#define _FUNC_NAME_ 0
+
+///////////////////////////////////////////////////////////////
+////// class
+///////////////////////////////////////////////////////////////
+#define Interface_Make(INTERFACE, TYPE1, FUNC1, ARGS1) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARGS1;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	static char* _##INTERFACE_NAME##_str[] = { #FUNC1 };\
+	\
+	static int _##INTERFACE_NAME##_strLen = 1;
+
+// vai na classe filho
+#define Interface_New_Header(INTERFACE, CLASS) INTERFACE Interface_New_##CLASS();
+
+#define Interface_New(INTERFACE, FUNC1, CLASS, PREFIX) \
+	INTERFACE Interface_New_##CLASS(CLASS classImpl) {\
+		INTERFACE interface = malloc(sizeof(INTERFACE));\
+		if(!interface) {abort();}\
+		interface->classImpl = classImpl;\
+		interface->##FUNC1 = PREFIX##FUNC1;\
+		return interface;\
+		}
+		
+	
+///////////////////////////////////////////////////////////////
+////// global variables
+///////////////////////////////////////////////////////////////
+
+
+
+///////////////////////////////////////////////////////////////
+////// macro functions
+///////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////
+////// constructor
+///////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////
+////// public functions
+///////////////////////////////////////////////////////////////
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* INTERFACE_H */
+
