@@ -19,7 +19,16 @@ int main(void) {
 
 void test1() {
   printf("\"%s\"\n", __func__);
-  Error("%s %s %s %d", "Jesus", "is", "God", 3);
+  char nin[100] = "/media/borges/data/cloud/Mega/programming/c/lib_common/baseLibC/fileUtil/main.c";
+  FILE *fin = fopen(nin, "r");
+  printf("BEGIN OF THE FILE");
+  char *line;	
+  do {
+  	line = FileUtil_Get_Line(fin);
+  	printf("%s", line);
+  } while(line != NULL);
+  
+  printf("END OF FILE");
 }
 
 void test2() {

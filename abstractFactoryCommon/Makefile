@@ -1,17 +1,17 @@
 CC              = gcc
-DLIB_DIR_H      = /media/borges/data/cloud/Mega/programming/c/share
+DLIB_DIR_H      = /var/www/shared
 DLIB_DIR        = $(DLIB_DIR_H)/dlibs
 DLIB_DIR_LPATH  = $(foreach dir,$(DLIB_DIR),   -L$(dir)) # add prefix to all dir
 DLIB_DIR_H_IPATH= $(foreach dir,$(DLIB_DIR_H), -I$(dir)) # add prefix to all dir
 DLIB_DIR_RPATH  = $(foreach dir,$(DLIB_DIR),   -Wl,-rpath=$(dir)) # add prefix to all dir
-DLIB_NAME       = -lerror -lmemoryManager -lstackTracer -larrayList_noSync
-CFLAGS          = -Wall -g -O3 -DNDEBUG -Wno-variadic-macros -fPIC # Werror transforms warning in error
+DLIB_NAME       = -lerror -lmemoryManager -lstackTracer -larrayList_noSync -lmap_ArrayList_noSync
+CFLAGS          = -Wall -g -O3 -DNDEBUG -Wno-variadic-macros -fPIC -Wl,--export-dynamic # Werror transforms warning in error
 DLIB_STD        = -lm -lpthread -lfcgi -lgc
 DLIB            = $(DLIB_STD) $(DLIB_NAME)
 COMPILER_FLAGS  = $(CFLAGS) $(DLIB_DIR_LPATH) $(DLIB_DIR_H_IPATH)
 LINK_FLAGS      = $(COMPILER_FLAGS) $(DLIB_DIR_RPATH) # use -Wl,-rpath= when the library is not in global environment
 LINK_DLIB       = $(LINK_FLAGS) -shared -Wl,-soname,$(LIB)
-C_SRC_LIB       = interface.c
+C_SRC_LIB       = abstractFactoryCommon.c
 C_SRC_MAIN      = main.c
 C_SRC           = $(C_SRC_LIB)
 C_OBJ_ORI       = $(C_SRC:.c=.o)
@@ -34,7 +34,7 @@ run: linker
 	./$(EXE) $(ARG1) $(ARG2) $(ARG3) $(ARG4) $(ARG5)
 
 lib: linker_lib export_lib export_lib_header
-	$(info Dynamic Library created with success: $(LIB) $nDynamic Library Header exported with success: $(C_LIB_H)$nTo use: #include <headers/$(C_LIB_H)>)
+	$(info $nDynamic Library created with success: $(LIB) $nDynamic Library Header exported with success: $(C_LIB_H)$nTo use: #include <headers/$(C_LIB_H)>)
 # can use to print: $(info your_text) $(warning your_text) or $(error your_text) # for new/break line use: $nYour_text - ex: my_text_line1 $nmy_text_line2
 
 linker_lib: cscrean clean_lib $(C_SRC:.c=.o) mv_c_obj
@@ -55,10 +55,10 @@ $(C_SRC_MAIN:.c=.o): %.o : %.c
 	
 export_lib:
 	$(info $nexport lib and lib_header:)
-	cp $(LIB) $(DLIB_DIR)/
+	sudo cp $(LIB) $(DLIB_DIR)/
 
 export_lib_header:
-	cp $(C_LIB_H) $(DLIB_DIR_H)/headers/
+	sudo cp $(C_LIB_H) $(DLIB_DIR_H)/headers/
 
 mv_c_obj: 
 	mv $(C_OBJ_ORI) $(C_OBJ_DIR)
@@ -78,7 +78,7 @@ add_c_src_main:
 	$(info new makefile variable: C_OBJ = $(C_OBJ))
 
 clean_lib: clean
-	rm -rf $(LIB) $(DLIB_DIR)/$(LIB) $(DLIB_DIR_H)/headers/$(C_LIB_H)
+	sudo rm -rf $(LIB) $(DLIB_DIR)/$(LIB) $(DLIB_DIR_H)/headers/$(C_LIB_H)
 
 clean:
 	rm -rf $(C_OBJ_DIR)*.o *~ *.out *.key out.txt

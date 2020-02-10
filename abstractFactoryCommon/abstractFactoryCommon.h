@@ -11,8 +11,8 @@
  * Created on Mar 25, 2019 PM
  */
 
-#ifndef ABSTRACT_FACTORY_H
-#define ABSTRACT_FACTORY_H
+#ifndef ABSTRACT_FACTORY_COMMON_H
+#define ABSTRACT_FACTORY_COMMON_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,7 +49,7 @@ extern "C" {
 ///////////////////////////////////////////////////////////////
 ////// class
 ///////////////////////////////////////////////////////////////
-enum Factory_Product_t {
+enum Factory_Product_Common_t {
 	ArrayList,
 	Map
 	};
@@ -73,7 +73,7 @@ enum Factory_Product_t {
 ///////////////////////////////////////////////////////////////
 ////// constructor
 ///////////////////////////////////////////////////////////////
-void *Abstract_Factory(enum Factory_Product_t fp);
+void *Abstract_Factory_Common(enum Factory_Product_Common_t fp);
 
 
 ///////////////////////////////////////////////////////////////
@@ -85,5 +85,5 @@ void *Abstract_Factory(enum Factory_Product_t fp);
 }
 #endif
 
-#endif /* ABSTRACT_FACTORY_H */
+#endif /* ABSTRACT_FACTORY_COMMON_H */
 

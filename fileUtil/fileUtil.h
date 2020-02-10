@@ -43,12 +43,12 @@ extern "C" {
 
 /**
  * Returns a new line of the file.
+ * Creates a new line.
  * If line is empty, returns '\0'
  * Return include the '\n'
  * If the file is end - return NULL
  */
 char *FileUtil_Get_Line(FILE *file);
-
 
 
 

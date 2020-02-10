@@ -1,6 +1,6 @@
-#include "abstractFactory.h"
+#include "abstractFactoryCommon.h"
 
-void *Abstract_Factory(enum Factory_Product_t fp) {
+void *Abstract_Factory(enum Factory_Product_Common_t fp) {
 	void *class = NULL;
 	
 	switch(fp) {
