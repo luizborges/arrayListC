@@ -1,0 +1,551 @@
+/**
+ * 
+ */
+
+#define Interface_Make_Head1(INTERFACE_NAME, TYPE1, FUNC1, ARG1) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head2(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head3(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2,\
+                        TYPE3, FUNC3, ARG3 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head4(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2,\
+                        TYPE3, FUNC3, ARG3, TYPE4, FUNC4, ARG4 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head5(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2,\
+                        TYPE3, FUNC3, ARG3, TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head6(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2,\
+                        TYPE3, FUNC3, ARG3, TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head7(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head8(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME; 
+	 
+	 
+#define Interface_Make_Head9(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;	 
+	 
+	 
+#define Interface_Make_Head10(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;	 
+	 
+	 
+#define Interface_Make_Head11(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;	 
+
+
+#define Interface_Make_Head12(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head13(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12, TYPE13, FUNC13, ARG13 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+		TYPE13 (*FUNC13) ARG13;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head14(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12, TYPE13, FUNC13, ARG13, TYPE14, FUNC14, ARG14 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+		TYPE13 (*FUNC13) ARG13;\
+		TYPE14 (*FUNC14) ARG14;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head15(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12, TYPE13, FUNC13, ARG13, TYPE14, FUNC14, ARG14, TYPE15, FUNC15, ARG15 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+		TYPE13 (*FUNC13) ARG13;\
+		TYPE14 (*FUNC14) ARG14;\
+		TYPE15 (*FUNC15) ARG15;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head16(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12, TYPE13, FUNC13, ARG13, TYPE14, FUNC14, ARG14, TYPE15, FUNC15, ARG15,\
+                        TYPE16, FUNC16, ARG16) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+		TYPE13 (*FUNC13) ARG13;\
+		TYPE14 (*FUNC14) ARG14;\
+		TYPE15 (*FUNC15) ARG15;\
+		TYPE16 (*FUNC16) ARG16;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head17(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12, TYPE13, FUNC13, ARG13, TYPE14, FUNC14, ARG14, TYPE15, FUNC15, ARG15,\
+                        TYPE16, FUNC16, ARG16, TYPE17, FUNC17, ARG17 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+		TYPE13 (*FUNC13) ARG13;\
+		TYPE14 (*FUNC14) ARG14;\
+		TYPE15 (*FUNC15) ARG15;\
+		TYPE16 (*FUNC16) ARG16;\
+		TYPE17 (*FUNC17) ARG17;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head18(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12, TYPE13, FUNC13, ARG13, TYPE14, FUNC14, ARG14, TYPE15, FUNC15, ARG15,\
+                        TYPE16, FUNC16, ARG16, TYPE17, FUNC17, ARG17, TYPE18, FUNC18, ARG18 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+		TYPE13 (*FUNC13) ARG13;\
+		TYPE14 (*FUNC14) ARG14;\
+		TYPE15 (*FUNC15) ARG15;\
+		TYPE16 (*FUNC16) ARG16;\
+		TYPE17 (*FUNC17) ARG17;\
+		TYPE18 (*FUNC18) ARG18;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head19(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12, TYPE13, FUNC13, ARG13, TYPE14, FUNC14, ARG14, TYPE15, FUNC15, ARG15,\
+                        TYPE16, FUNC16, ARG16, TYPE17, FUNC17, ARG17, TYPE18, FUNC18, ARG18, TYPE19, FUNC19, ARG19 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+		TYPE13 (*FUNC13) ARG13;\
+		TYPE14 (*FUNC14) ARG14;\
+		TYPE15 (*FUNC15) ARG15;\
+		TYPE16 (*FUNC16) ARG16;\
+		TYPE17 (*FUNC17) ARG17;\
+		TYPE18 (*FUNC18) ARG18;\
+		TYPE19 (*FUNC19) ARG19;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head20(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12, TYPE13, FUNC13, ARG13, TYPE14, FUNC14, ARG14, TYPE15, FUNC15, ARG15,\
+                        TYPE16, FUNC16, ARG16, TYPE17, FUNC17, ARG17, TYPE18, FUNC18, ARG18, TYPE19, FUNC19, ARG19,\
+                        TYPE20, FUNC20, ARG20 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+		TYPE13 (*FUNC13) ARG13;\
+		TYPE14 (*FUNC14) ARG14;\
+		TYPE15 (*FUNC15) ARG15;\
+		TYPE16 (*FUNC16) ARG16;\
+		TYPE17 (*FUNC17) ARG17;\
+		TYPE18 (*FUNC18) ARG18;\
+		TYPE19 (*FUNC19) ARG19;\
+		TYPE20 (*FUNC20) ARG20;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+#define Interface_Make_Head21(INTERFACE_NAME, TYPE1, FUNC1, ARG1, TYPE2, FUNC2, ARG2, TYPE3, FUNC3, ARG3,\
+                        TYPE4, FUNC4, ARG4, TYPE5, FUNC5, ARG5, TYPE6, FUNC6, ARG6, TYPE7, FUNC7, ARG7,\
+                        TYPE8, FUNC8, ARG8, TYPE9, FUNC9, ARG9, TYPE10, FUNC10, ARG10, TYPE11, FUNC11, ARG11,\
+                        TYPE12, FUNC12, ARG12, TYPE13, FUNC13, ARG13, TYPE14, FUNC14, ARG14, TYPE15, FUNC15, ARG15,\
+                        TYPE16, FUNC16, ARG16, TYPE17, FUNC17, ARG17, TYPE18, FUNC18, ARG18, TYPE19, FUNC19, ARG19,\
+                        TYPE20, FUNC20, ARG20, TYPE21, FUNC21, ARG21 ) \
+	typedef struct { \
+		void *classImpl;\
+		TYPE1 (*FUNC1) ARG1;\
+		TYPE2 (*FUNC2) ARG2;\
+		TYPE3 (*FUNC3) ARG3;\
+		TYPE4 (*FUNC4) ARG4;\
+		TYPE5 (*FUNC5) ARG5;\
+		TYPE6 (*FUNC6) ARG6;\
+		TYPE7 (*FUNC7) ARG7;\
+		TYPE8 (*FUNC8) ARG8;\
+		TYPE9 (*FUNC9) ARG9;\
+		TYPE10 (*FUNC10) ARG10;\
+		TYPE11 (*FUNC11) ARG11;\
+		TYPE12 (*FUNC12) ARG12;\
+		TYPE13 (*FUNC13) ARG13;\
+		TYPE14 (*FUNC14) ARG14;\
+		TYPE15 (*FUNC15) ARG15;\
+		TYPE16 (*FUNC16) ARG16;\
+		TYPE17 (*FUNC17) ARG17;\
+		TYPE18 (*FUNC18) ARG18;\
+		TYPE19 (*FUNC19) ARG19;\
+		TYPE20 (*FUNC20) ARG20;\
+		TYPE21 (*FUNC21) ARG21;\
+	} INTERFACE_NAME##_o;\
+	\
+	typedef INTERFACE_NAME##_o* INTERFACE_NAME;\
+	\
+	extern interfaceConfig_t InterfaceConfig_##INTERFACE_NAME;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
