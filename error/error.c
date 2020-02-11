@@ -64,6 +64,10 @@ void Error_(const char *file, const int line,
   //////////////////////////////////////////////////////////////////////////////
   // user msg information
   //////////////////////////////////////////////////////////////////////////////
+  // coloquei essa ERROR MSG em destaque, para melhor visualização no log do apache2
+  fprintf(stderr, "************************************************************\n");
+  fprintf(stderr, "*****************     ERROR MSG     ************************\n");
+  fprintf(stderr, "************************************************************\n");
   fprintf(stderr, "ERROR %s\n%s\nTime Error: %s\n", ErrorMsg, ErrorInfo, strTimer);
     
   abort();

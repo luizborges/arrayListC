@@ -78,7 +78,7 @@ add_c_src_main:
 	$(info new makefile variable: C_OBJ = $(C_OBJ))
 
 clean_lib: clean
-	rm -rf $(LIB) $(DLIB_DIR)/$(LIB) $(DLIB_DIR_H)/headers/$(C_LIB_H)
+	sudo rm -rf $(LIB) $(DLIB_DIR)/$(LIB) $(DLIB_DIR_H)/headers/$(C_LIB_H)
 
 clean:
 	rm -rf $(C_OBJ_DIR)*.o *~ *.out *.key out.txt
