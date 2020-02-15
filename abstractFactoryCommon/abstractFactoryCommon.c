@@ -10,9 +10,21 @@ void *Abstract_Factory_Common(enum Factory_Product_Common_t fp) {
 		case Map:
 			class = Map_ArrayList_noSync_New_Interface();
 			break;
-		default: Error("Abstract Factory - Not Factory Product Valid: %d\n", (int)fp);
+		default: Error("Abstract Factory Common - Not Factory Product Valid: %d\n", (int)fp);
 	}
 	
-	return class;
+	if(class != NULL) { // se não ocorreu problema
+		return class;
+	}
+	
+	switch(fp) {
+		case ArrayList:
+			Error("Cannot Create a ArrayList object.\n");
+		case Map:
+			Error("Cannot Create a Map object.\n");
+		default: Error("Abstract Factory Common - Not Factory Product Valid: %d\n", (int)fp);
+	}
+	
+	return NULL;
 }
 

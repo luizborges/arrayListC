@@ -26,6 +26,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include <headers/memoryManager.h>
 #include <headers/error.h>

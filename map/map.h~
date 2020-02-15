@@ -1,6 +1,6 @@
 /**
  * @author: luiz borges
- * @descr: interface para mapList
+ * @descr: interface para arrayList
  */
 #ifndef MAP_H
 #define MAP_H

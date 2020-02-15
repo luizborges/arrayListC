@@ -13,7 +13,6 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 #include <headers/memoryManager.h>
 #include <headers/error.h>
@@ -35,7 +34,6 @@ typedef struct {
 
 typedef struct {
   ArrayList_noSync_t list;
-  Map_ArrayList_noSync_cell_o *lastAccessed; // guarda a referência para a última chave acessada (tanto para get, set, hasKey - é criado com o valor NULL - quando se deleta uma chave, essa variável é reinicializada para evitar bugs
 } Map_ArrayList_noSync_o;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -59,8 +57,7 @@ extern void  *Map_ArrayList_noSyncget (const void *_map, const char *key);
 extern void  *Map_ArrayList_noSyncset (void *_map, const char *key, const void *content);
 extern void  *Map_ArrayList_noSyncdel (void *_map, const char *key);
 extern char **Map_ArrayList_noSynckey (const void *_map, int *numKeys); // numKeys = número de chaves existentes no map
-extern bool   Map_ArrayList_noSynchasKey (const void *_mapf, const char *key);
-extern void   Map_ArrayList_noSyncend    (void *_map);
+extern void   Map_ArrayList_noSyncend (void *_map);
 
 #ifdef __cplusplus
 }

@@ -9,8 +9,6 @@
 void test1(Map_ArrayList_noSync_t _map);
 void test2(Map_ArrayList_noSync_t _map);
 //extern void test3(Map_ArrayList_noSync_t _map);
-void test4();
-void test5();
 
 int main(void) {
 	MM_Init();
@@ -20,7 +18,6 @@ int main(void) {
  	test2(NULL);
 // 	test3(NULL);
 	test4(); // testa a interface
-	test5(); // testa a interface 2
   return 0;
 }
 
@@ -155,46 +152,7 @@ void test4() {
 	
 }
 
-void test5() {
-	printf("******************************\n");
-	printf("**** %s\n", __func__);
-	printf("******************************\n");
-	
-	map_t map = (map_t)Map_ArrayList_noSync_New_Interface();
-	
-	char *key = MM_Malloc(10*sizeof(char));
-	for(int i=0; i < 1000; ++i) {
-		snprintf(key, 10, "key%d", i);
-		char *value = MM_Malloc(20*sizeof(char));
-		snprintf(value, 20, "value%d", i);
-		assert(map->HasKey(map->self, value) == false);
-		map->Set(map->self, key, value);
-	}
-	
-	int numKey;
-	char **keys = map->Key(map->self, &numKey);
-	
-	printf("test.. has key:::\n");
-	assert(map->HasKey(map->self, "não tem essa chave") == false);
-	
-	for(int i=0; i < numKey; ++i) {
-		assert(map->HasKey(map->self, keys[i]) == true);
-		char *value = map->Get(map->self, keys[i]);
-		printf("map[\'%s\']: \"%s\"\n", keys[i], value);
-	}
-	
-	for(int i=0; i < numKey; ++i) {
-		assert(map->HasKey(map->self, keys[i]) == true);
-		char *value = map->Del(map->self, keys[i]);
-		assert(map->HasKey(map->self, value) == false);
-	}
-	
-//	char *value = map->Get(map->self, "key56");
-//	printf("map[\'%s\']: \"%s\"\n", "key56", value);
-	
-	
-	
-}
+
 
 
 
