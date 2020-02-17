@@ -36,6 +36,7 @@ typedef struct {
 typedef struct {
   ArrayList_noSync_t list;
   Map_ArrayList_noSync_cell_o *lastAccessed; // guarda a referência para a última chave acessada (tanto para get, set, hasKey - é criado com o valor NULL - quando se deleta uma chave, essa variável é reinicializada para evitar bugs
+  int lastAccessed_arrayIdx; // necessário guardar a posição(idx) que a chave fica no array, para o caso de deletar ela, para a otimização funcionar
 } Map_ArrayList_noSync_o;
 
 ////////////////////////////////////////////////////////////////////////////////

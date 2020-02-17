@@ -54,6 +54,7 @@ Map_ArrayList_noSync_t Map_ArrayList_noSync_New() {
 	map->list = ArrayList_noSync_New();
 
 	map->lastAccessed = NULL; // inicializa a chave com NULL
+	map->lastAccessed_arrayIdx = -5; // inicializa a posição do array
 	
 	
 	return map;
@@ -98,12 +99,13 @@ void *Map_ArrayList_noSyncget (const void *_map, const char *key) {
 		}
 	}
 	
-	Map_ArrayList_noSync_cell_t cell = Map_ArrayList_noSync_Get_Cell_By_Key(map, key, NULL);
+	int arrayIdx = -4;
+	Map_ArrayList_noSync_cell_t cell = Map_ArrayList_noSync_Get_Cell_By_Key(map, key, &arrayIdx);
 	if(cell == NULL) {
 		Error("Map_ArrayList_noSync: no key match for self map. key = \"%s\"", key);
 	}
 	map->lastAccessed = cell; // guarda a última célula acessada
-	
+	map->lastAccessed_arrayIdx = arrayIdx; // guarda a posição da última célula acessada
 	return cell->content;
 }
 
@@ -113,6 +115,7 @@ void *Map_ArrayList_noSyncset (void *_map, const char *key, const void *content)
 	Map_ArrayList_noSync_Check(map, key);
 	Map_ArrayList_noSync_cell_t cell = NULL;
 	void *contentOld = NULL;
+	int arrayIdx = -2;
 	
 	// ótimização da busca, verifica se é a célula requisitada é a última acessada
 	if(map->lastAccessed != NULL) {
@@ -122,7 +125,7 @@ void *Map_ArrayList_noSyncset (void *_map, const char *key, const void *content)
 	}
 	
 	if(cell == NULL) { // verifica se a célula já foi encontrada pela otimização
-		cell = Map_ArrayList_noSync_Get_Cell_By_Key(map, key, NULL);
+		cell = Map_ArrayList_noSync_Get_Cell_By_Key(map, key, &arrayIdx);
 	}
 	
 	
@@ -141,6 +144,7 @@ void *Map_ArrayList_noSyncset (void *_map, const char *key, const void *content)
 		cell->content = (void*)content; // copia o conteúdo para o map
 		
 		ArrayList_noSync_add(map->list, 0, cell); // insere a nova célula no map - inserida na posição 0
+		arrayIdx = 0;
 		
 	} else { // key already exists, just insert the content in map
 		contentOld = cell->content; // recebe o antigo conteúdo
@@ -148,6 +152,8 @@ void *Map_ArrayList_noSyncset (void *_map, const char *key, const void *content)
 	}
 	
 	map->lastAccessed = cell; // guarda a última célula acessada
+	map->lastAccessed_arrayIdx = arrayIdx; // guarda a posição da última célula acessada
+	
 	return contentOld;
 }
 
@@ -161,7 +167,8 @@ void *Map_ArrayList_noSyncdel(void *_map, const char *key) {
 	// ótimização da busca, verifica se é a célula requisitada é a última acessada
 	if(map->lastAccessed != NULL) {
 		if(strcmp(map->lastAccessed->key, key) == 0) {
-			cell = map->lastAccessed;
+			cell     = map->lastAccessed;
+			arrayIdx = map->lastAccessed_arrayIdx;
 		}
 	}
 	
@@ -229,13 +236,15 @@ bool Map_ArrayList_noSynchasKey (const void *_map, const char *key) {
 		}
 	}
 	
-	// se não é a última célula acessada, faz a busca no map inteiro	
-	Map_ArrayList_noSync_cell_t cell = Map_ArrayList_noSync_Get_Cell_By_Key(map, key, NULL);
+	// se não é a última célula acessada, faz a busca no map inteiro
+	int arrayIdx = -3;
+	Map_ArrayList_noSync_cell_t cell = Map_ArrayList_noSync_Get_Cell_By_Key(map, key, &arrayIdx);
 	if(cell == NULL) {
 		return false;
 	}
 	
 	map->lastAccessed = cell; // guarda a última célula acessada
+	map->lastAccessed_arrayIdx = arrayIdx; // guarda o id da última célula acessada
 	
 	return true;
 }
