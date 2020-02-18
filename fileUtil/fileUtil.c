@@ -1,6 +1,23 @@
 #include "fileUtil.h"
 
-char *FileUtil_Get_Line (FILE *file) {
+////////////////////////////////////////////////////////////////////////////////
+// Enum
+////////////////////////////////////////////////////////////////////////////////
+
+enum FileUtil_Type_t {
+	file,
+	file_name
+};
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// functions
+////////////////////////////////////////////////////////////////////////////////
+char*
+FileUtil_Get_Line (FILE *file)
+{
 	fpos_t pos;
     int lineSize, i;
     char *line;
@@ -33,6 +50,148 @@ char *FileUtil_Get_Line (FILE *file) {
     
     return line;
 }
+
+
+char*
+FileUtil_ArrayMap_Str(const void *var,
+				  	  const char *type_)
+{
+	/////////////////////////////////////////////////////////////////////////////////
+	// verifica os argumentos
+	/////////////////////////////////////////////////////////////////////////////////
+	if(var == NULL) {
+		Error("parameter var is NULL.\nvar = %p", var);
+	}
+	
+	enum FileUtil_Type_t type = -1;
+	if(strcmp(type_, "file") == 0) {
+		type = file;
+	}
+	else if(strcmp(type_, "file_name") == 0) {
+		type = file_name;
+	}
+	else {
+		Error("parameter type is wrong.\nUse \"file\" or \"file_name\" in accordance with type desired.\n"
+				"see documentation to more details.\ntype: \"%s\"\n", type_);
+	}
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	// padroniza os arugmentos para um tratamento comum
+	/////////////////////////////////////////////////////////////////////////////////
+	char *fname = NULL; // usada para guardar o nome do arquivo, caso necessario
+	FILE *file_ = NULL; // usada para tratamento igual dos dois tipos
+	switch(type) {
+		case file:
+			file_ = (FILE*)var;
+			break;
+		case file_name:
+			fname = (char*)var;
+			file_ = fopen(fname, "r");
+			if(file_ == NULL) {
+				Error("error in open file.\nfile_name: \"%s\"", fname);
+			}
+			break;
+		default:
+			Error("parameter type is wrong.\nUse file or file_name in accordance with type desired.\n"
+				"see documentation to more details.\ntype code: %d\n", type);
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	// descobre o número de bytes para o fim do arquivo
+	/////////////////////////////////////////////////////////////////////////////////
+	long int sizeCurrent = ftell(file_); // descobre o tamanho do arquivo por agora
+	fpos_t pos;
+	int error = fgetpos(file_, &pos);
+	if(error != 0) {
+		if(type == file) {
+			Error("error in keep position of file.\nfgetpos error code: %d\nfile pointer: %p",
+					error, file_);
+		} else {
+			Error("error in keep position of file.\nfgetpos error code: %d\nfile name: \"%s\"",
+					error, fname);
+		}
+	}
+	
+	error = fseek(file_, 0, SEEK_END); // vai até o fim do arquivo
+	if(error != 0) {
+		switch(type) {
+			case file: Error("error in get the end of file.\nfseek error code: %d\nfile pointer: %p",error, file_);
+			case file_name: Error("error in get the end of file.\nfseek error code: %d\nfile name: \"%s\"", error, fname);
+		}
+	}
+	
+	long int sizeFile = ftell(file_); // descobre o tamanho total
+	if(sizeFile == -1L) {
+		switch(type) {
+			case file: Error("error in get the size of file.\nftell returned: %ld\nfile pointer: %p",sizeFile, file_);
+			case file_name: Error("error in get the size of file.\nftell returned: %ld\nfile name: \"%s\"", sizeFile, fname);
+		}
+	}
+	
+	sizeFile = sizeFile -sizeCurrent +1; // 1 pois a subtração retira 1 e 1 para guardar o charactere '\0'
+	
+	error = fsetpos(file_, &pos); // recupera a posição do arquivo inicial
+	if(error != 0) {
+		if(type == file) {
+			Error("error in restored position of file.\nfsetpos error code: %d\nfile pointer: %p",
+					error, file_);
+		} else {
+			Error("error in restored position of file.\nfsetpos error code: %d\nfile name: \"%s\"",
+					error, fname);
+		}
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	// cria a string e insere o valor conteúdo do arquivo nela
+	/////////////////////////////////////////////////////////////////////////////////
+	char *str = MM_Malloc(sizeFile);
+	if(str == NULL) {
+		switch(type) {
+			case file: Error("error in allocate memory to resulted string\nfile pointer: %p",sizeFile, file_);
+			case file_name: Error("error in allocate memory to resulted string\nfile name: \"%s\"", sizeFile, fname);
+		}
+	}
+	
+	size_t read = fread(str, 1, sizeFile, file_);
+	if(read != (sizeFile -1)) {
+		switch(type) {
+			case file: Error("error in difference of bytes read.\nfread: %ld\nsizeFile: %ld\nsizeFile - fread: %ld\nfile pointer: %p",sizeFile, file_);
+			case file_name: Error("error in difference of bytes read.\nfread: %ld\nsizeFile: %ld\nsizeFile - fread: %ld\nfile name: \"%s\"", read, sizeFile, sizeFile - read, fname);
+		}
+	}
+
+	str[sizeFile-1] = '\0'; // insere o charactere de fim de string na última linha
+
+	return str;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

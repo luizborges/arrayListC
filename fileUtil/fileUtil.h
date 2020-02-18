@@ -25,7 +25,6 @@ extern "C" {
 // Structs
 ////////////////////////////////////////////////////////////////////////////////
 
-
 ////////////////////////////////////////////////////////////////////////////////
 // Typedefs
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,6 +50,18 @@ extern "C" {
 char *FileUtil_Get_Line(FILE *file);
 
 
+/**
+ * Abre um arquivo ou trata de um arquivo já aberto e insere todo o seu contéudo em um arranjo
+ * e retorna ele.
+ * Ao final insere o character '\0'.
+ * O character EOF não é inserido no arranjo retornado.
+ * @param type: pode somente ser duas strings:
+ *              "file" : quando o tipo var for uma variável do tipo FILE*
+ *              "file_name" : quando o tipo var for o nome de um arquivo para ser aberto
+ */
+char*
+FileUtil_ArrayMap_Str(const void *var,
+				  	  const char *type);
 
 #ifdef __cplusplus
 }

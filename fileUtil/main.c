@@ -1,5 +1,8 @@
 #include "fileUtil.h"
 #include <assert.h>
+#include <headers/memoryManager.h>
+#include <headers/error.h>
+#include <headers/stackTracer.h>
 
 
 
@@ -11,6 +14,8 @@ void test2();
 void test3();
 
 int main(void) {
+	MM_Init();
+	StackTracer_Init();
  	test1();
  	test2();
  	test3();
@@ -21,34 +26,41 @@ void test1() {
   printf("\"%s\"\n", __func__);
   char nin[100] = "/media/borges/data/cloud/Mega/programming/c/lib_common/baseLibC/fileUtil/main.c";
   FILE *fin = fopen(nin, "r");
-  printf("BEGIN OF THE FILE");
-  char *line;	
-  do {
-  	line = FileUtil_Get_Line(fin);
+  printf("BEGIN OF THE FILE\n\"");
+  char *line;
+  while((line = FileUtil_Get_Line(fin)) != NULL) {
   	printf("%s", line);
-  } while(line != NULL);
-  
-  printf("END OF FILE");
+  }
+  printf("\"\nEND OF FILE\n");
 }
 
 void test2() {
-  Error("Test Error without arguments");
+  printf("\n===================================\n");
+  printf("Func: %s\n", __func__);
+  printf("===================================\n");
+  char nin[100] = "/media/borges/data/cloud/Mega/programming/c/lib_common/baseLibC/fileUtil/main.c";
+  
+  char *str = FileUtil_ArrayMap_Str(nin, "file_name");
+  printf("BEGIN OF FILE:\n");
+  printf("\"%s\"",str);
+  printf("\nEND OF FILE\n");
 }
 
 void test3(void) {
-  printf("\"%s\"\n", __func__);
+  printf("\n===================================\n");
+  printf("Func: %s\n", __func__);
+  printf("===================================\n");
   
+  char nin[100] = "/media/borges/data/cloud/Mega/programming/c/lib_common/baseLibC/fileUtil/main.c";
+  FILE *fin = fopen(nin, "r");
+  
+  char *line;
+  while(strcmp(line = FileUtil_Get_Line(fin), "void test3(void) {\n") != 0);
+  
+  char *str = FileUtil_ArrayMap_Str(fin, "file");
+  printf("REST OF FILE:\n");
+  printf("\"%s\"",str);
+  printf("\nEND OF FILE\n");
 }
-
-
-
-
-
-
-
-
-
-
-
-
+//8
 
