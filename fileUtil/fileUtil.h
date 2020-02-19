@@ -54,14 +54,15 @@ char *FileUtil_Get_Line(FILE *file);
  * Abre um arquivo ou trata de um arquivo já aberto e insere todo o seu contéudo em um arranjo
  * e retorna ele.
  * Ao final insere o character '\0'.
+ * Ao final de todas as operações, o arquivo é fechado - fclose
  * O character EOF não é inserido no arranjo retornado.
  * @param type: pode somente ser duas strings:
  *              "file" : quando o tipo var for uma variável do tipo FILE*
  *              "file_name" : quando o tipo var for o nome de um arquivo para ser aberto
  */
 char*
-FileUtil_ArrayMap_Str(const void *var,
-				  	  const char *type);
+FileUtil_StrMap(const void *var,
+				const char *type);
 
 #ifdef __cplusplus
 }

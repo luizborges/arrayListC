@@ -53,8 +53,8 @@ FileUtil_Get_Line (FILE *file)
 
 
 char*
-FileUtil_ArrayMap_Str(const void *var,
-				  	  const char *type_)
+FileUtil_StrMap(const void *var,
+				const char *type_)
 {
 	/////////////////////////////////////////////////////////////////////////////////
 	// verifica os argumentos
@@ -162,6 +162,7 @@ FileUtil_ArrayMap_Str(const void *var,
 	}
 
 	str[sizeFile-1] = '\0'; // insere o charactere de fim de string na última linha
+	fclose(file_); // fecha o arquivo
 
 	return str;
 }

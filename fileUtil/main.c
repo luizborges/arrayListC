@@ -40,7 +40,7 @@ void test2() {
   printf("===================================\n");
   char nin[100] = "/media/borges/data/cloud/Mega/programming/c/lib_common/baseLibC/fileUtil/main.c";
   
-  char *str = FileUtil_ArrayMap_Str(nin, "file_name");
+  char *str = FileUtil_StrMap(nin, "file_name");
   printf("BEGIN OF FILE:\n");
   printf("\"%s\"",str);
   printf("\nEND OF FILE\n");
@@ -57,7 +57,7 @@ void test3(void) {
   char *line;
   while(strcmp(line = FileUtil_Get_Line(fin), "void test3(void) {\n") != 0);
   
-  char *str = FileUtil_ArrayMap_Str(fin, "file");
+  char *str = FileUtil_StrMap(fin, "file");
   printf("REST OF FILE:\n");
   printf("\"%s\"",str);
   printf("\nEND OF FILE\n");
