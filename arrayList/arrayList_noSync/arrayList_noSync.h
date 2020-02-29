@@ -68,6 +68,8 @@ extern void *ArrayList_noSync_del(void *_list, const int pos);
 extern int   ArrayList_noSync_len(const void *_list);
 extern void  ArrayList_noSync_end(void *_list);
 
+extern void  ArrayList_noSync_clean (void *_list);
+
 #ifdef __cplusplus
 }
 #endif

@@ -79,6 +79,7 @@ map_t Map_ArrayList_noSync_New_Interface() {
 	map->Key 	= Map_ArrayList_noSynckey;
 	map->HasKey = Map_ArrayList_noSynchasKey;
 	map->End    = Map_ArrayList_noSyncend;
+	map->Clean  = Map_ArrayList_noSyncclean;
 	
 	return map;
 }
@@ -250,6 +251,19 @@ bool Map_ArrayList_noSynchasKey (const void *_map, const char *key) {
 }
 
 
+void Map_ArrayList_noSyncclean  (void *_map) {
+	Map_ArrayList_noSync_t map = (Map_ArrayList_noSync_t)_map;
+	// check args
+	if(map == NULL)       { Error("Map_ArrayList_noSync: map is NULL");      }
+	if(map->list == NULL) { Error("Map_ArrayList_noSync: map_list is NULL"); }
+	
+	ArrayList_noSync_clean(map->list); // libera toda a memória
+	map->lastAccessed = NULL; // seta a chave com NULL
+	map->lastAccessed_arrayIdx = -7; // seta posição de inicialização - com código de erro prórpio
+	
+}
+
+
 void Map_ArrayList_noSyncend(void *_map) {
 #ifdef GC_H
 // do nothing - garbage collector does all service alone
@@ -259,14 +273,11 @@ void Map_ArrayList_noSyncend(void *_map) {
 	if(map == NULL)       { Error("Map_ArrayList_noSync: map is NULL");      }
 	if(map->list == NULL) { Error("Map_ArrayList_noSync: map_list is NULL"); }
 	
-	int numKeys = ArrayList_noSync_len(map->list); // recebe o número de keys
-	for(int i=0; i < numKeys; ++i) { // deleta cada célula do map
-		Map_ArrayList_noSync_cell_t cell = (Map_ArrayList_noSync_cell_t)ArrayList_noSync_del(map->list, 0);
-		MM_Free(cell->key); // libera a memória da key
-		MM_Free(cell); // libera a memória da cell
-	}
+	ArrayList_noSync_clean(map->list); // libera toda a memória
+	map->lastAccessed = NULL; // seta a chave com NULL
+	map->lastAccessed_arrayIdx = -6; // inicializa a posição do array
 	
-	ArrayList_noSync_end(map->list); // libera o arrayList
+	ArrayList_noSync_end(map->list); // seta posição de inicialização - com código de erro prórpio
 	MM_Free(map);
 #endif
 }

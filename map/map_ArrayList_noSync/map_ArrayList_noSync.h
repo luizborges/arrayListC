@@ -60,7 +60,8 @@ extern void  *Map_ArrayList_noSyncget (const void *_map, const char *key);
 extern void  *Map_ArrayList_noSyncset (void *_map, const char *key, const void *content);
 extern void  *Map_ArrayList_noSyncdel (void *_map, const char *key);
 extern char **Map_ArrayList_noSynckey (const void *_map, int *numKeys); // numKeys = número de chaves existentes no map
-extern bool   Map_ArrayList_noSynchasKey (const void *_mapf, const char *key);
+extern bool   Map_ArrayList_noSynchasKey (const void *_map, const char *key);
+extern void   Map_ArrayList_noSyncclean  (void *_map);
 extern void   Map_ArrayList_noSyncend    (void *_map);
 
 #ifdef __cplusplus

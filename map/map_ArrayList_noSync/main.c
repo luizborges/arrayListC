@@ -21,6 +21,7 @@ int main(void) {
 // 	test3(NULL);
 	test4(); // testa a interface
 	test5(); // testa a interface 2
+	test6();
   return 0;
 }
 
@@ -188,16 +189,38 @@ void test5() {
 		char *value = map->Del(map->self, keys[i]);
 		assert(map->HasKey(map->self, value) == false);
 	}
-	
+		
 //	char *value = map->Get(map->self, "key56");
 //	printf("map[\'%s\']: \"%s\"\n", "key56", value);
-	
-	
-	
 }
 
-
-
+void test6() {
+	printf("******************************\n");
+	printf("**** %s\n", __func__);
+	printf("******************************\n");
+	
+	map_t map = (map_t)Map_ArrayList_noSync_New_Interface();
+	map->Clean(map->self);
+	
+	char *key = MM_Malloc(10*sizeof(char));
+	for(int i=0; i < 1000; ++i) {
+		snprintf(key, 10, "key%d", i);
+		char *value = MM_Malloc(20*sizeof(char));
+		snprintf(value, 20, "value%d", i);
+		assert(map->HasKey(map->self, value) == false);
+		map->Set(map->self, key, value);
+	}
+	
+	int len;
+	map->Key(map->self, &len);
+	printf("map len: %d\n", len);
+	
+	map->Clean(map->self);
+	map->Key(map->self, &len);
+	printf("map len after clean: %d\n", len);
+	
+	assert(1 == 2);
+}
 
 
 

@@ -252,12 +252,13 @@ arrayList_t  ArrayList_noSync_New_Interface() {
 	arrayList->self = arrayList_noSync;
 	
 	// insere as funções
-	arrayList->Get = ArrayList_noSync_get;
-	arrayList->Set = ArrayList_noSync_set;
-	arrayList->Add = ArrayList_noSync_add;
-	arrayList->Del = ArrayList_noSync_del;
-	arrayList->Len = ArrayList_noSync_len;
-	arrayList->End = ArrayList_noSync_end;
+	arrayList->Get   = ArrayList_noSync_get;
+	arrayList->Set   = ArrayList_noSync_set;
+	arrayList->Add   = ArrayList_noSync_add;
+	arrayList->Del   = ArrayList_noSync_del;
+	arrayList->Len   = ArrayList_noSync_len;
+	arrayList->End   = ArrayList_noSync_end;
+	arrayList->Clean = ArrayList_noSync_clean;
 	
 	return arrayList;
 }
@@ -370,7 +371,18 @@ void ArrayList_noSync_end(void *_list) {
   MM_Free(list); // remove a lista
 }
 
-
+void  ArrayList_noSync_clean (void *_list) {
+  ArrayList_noSync_t list = (ArrayList_noSync_t)_list;
+  strcpy(list->func, "ArrayList_noSync_clean"); // grava a função pública que chamou, para o caso de erro
+  ArrayList_noSync_Check(list, 0);
+  if(list->len > 0) { // check se a lista está vazia
+    ArrayList_noSync_Position(list, 0); // seta a célula de referência para a primeira célula da lista
+    int len = list->len;
+    for(int i = 0; i < len; ++i) {
+      ArrayList_noSync_delete_Cell(list, 0); // exclui sempre a primeira célula da lista
+    }
+  }
+}
 
 
 

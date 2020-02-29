@@ -10,6 +10,8 @@
 void test1(ArrayList_noSync_t list);
 void test2(ArrayList_noSync_t list);
 void test3(ArrayList_noSync_t list);
+void test4(ArrayList_noSync_t list_);
+void test5();
 
 int main(void) {
 	StackTracer_Init();
@@ -18,6 +20,7 @@ int main(void) {
  	test2(NULL);
  	test3(NULL);
  	test4(NULL); // test interface
+ 	test5();
   return 0;
 }
 
@@ -84,7 +87,24 @@ void test4(ArrayList_noSync_t list_) {
 	}
 }
 
-
+void test5() {
+	printf("\n******************************\n");
+	printf("\"%s\"\n", __func__);
+	printf("******************************\n");
+	
+	arrayList_t list = ArrayList_noSync_New_Interface();
+	list->Clean(list->self);
+	
+	for(int i=0; i < 1000; ++i) {
+		list->Add(list->self, i, (void*)i);
+	}
+	
+	printf("Len: %d\n", list->Len(list->self));
+	assert(list->Len(list->self) == 1000);
+	list->Clean(list->self);
+	printf("Len after clean: %d\n", list->Len(list->self));
+	assert(list->Len(list->self) == 0);
+}
 
 
 

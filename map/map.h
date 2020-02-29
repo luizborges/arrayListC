@@ -18,6 +18,7 @@ typedef struct {
 	void  *(*Del)    (void *self, const char *key);
 	char **(*Key)    (const void *self, int *numKeys); // numKeys = número de chaves existentes no map
 	bool   (*HasKey) (const void *self, const char *key);
+	void   (*Clean)  (void *self); // libera todas as chaves - porém não destroi o map
 	void   (*End)    (void *self);
  	
 } map_o;
