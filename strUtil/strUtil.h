@@ -1,7 +1,7 @@
 /**
  */
-#ifndef ERROR_H
-#define ERROR_H
+#ifndef FILEUTIL_H
+#define FILEUTIL_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,21 +12,18 @@ extern "C" {
 ////////////////////////////////////////////////////////////////////////////////
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
-#include <time.h>
+#include <string.h>
 
+#include <headers/error.h>
+#include <headers/memoryManager.h>
 ////////////////////////////////////////////////////////////////////////////////
 // Defines
 ////////////////////////////////////////////////////////////////////////////////
-#define Error(...) \
-  Error_(__FILE__, __LINE__, __func__, __VA_ARGS__);
 
-#define MError(...) \
-  MError_(__FILE__, __LINE__, __func__, __VA_ARGS__);
+
 ////////////////////////////////////////////////////////////////////////////////
 // Structs
 ////////////////////////////////////////////////////////////////////////////////
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Typedefs
@@ -42,26 +39,35 @@ extern "C" {
 ////////////////////////////////////////////////////////////////////////////////
 // Functions
 ////////////////////////////////////////////////////////////////////////////////
-/**
- * Depois de imprimir a mensagem de erro, executa a função: abort();
- */
-extern void Error_(const char *file, const int line,
-                   const char *func, ...);
 
 /**
- * Apenas imprime a mensagem de erro.
- * Mensage Error
+ * Returns a new line of the file.
+ * Creates a new line.
+ * If line is empty, returns '\0'
+ * Return include the '\n'
+ * If the file is end - return NULL
  */
-extern void MError_(const char *file, const int line,
-                    const char *func, ...);
+char *FileUtil_Get_Line(FILE *file);
 
 
-
+/**
+ * Abre um arquivo ou trata de um arquivo já aberto e insere todo o seu contéudo em um arranjo
+ * e retorna ele.
+ * Ao final insere o character '\0'.
+ * Ao final de todas as operações, o arquivo é fechado - fclose
+ * O character EOF não é inserido no arranjo retornado.
+ * @param type: pode somente ser duas strings:
+ *              "file" : quando o tipo var for uma variável do tipo FILE*
+ *              "file_name" : quando o tipo var for o nome de um arquivo para ser aberto
+ */
+char*
+FileUtil_StrMap(const void *var,
+				const char *type);
 
 #ifdef __cplusplus
 }
 #endif
-#endif // ERROR_H
+#endif // FILEUTIL_H
 
 ////////////////////////////////////////////////////////////////////////////////
 //
