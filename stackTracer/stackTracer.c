@@ -17,8 +17,16 @@ typedef struct {
 	char name[16];
 } _stackTracer_signal_o;
 
-static _stackTracer_signal_o _signal[StackTracer_Max_Signal]; 
+static _stackTracer_signal_o _signal[StackTracer_Max_Signal];
 
+typedef struct {
+	char file[256];
+	char func[256];
+	int  line;
+	bool init; // true - foi inicializado e usado | false - otherwise
+} _stackTracer_line_o;
+
+static _stackTracer_line_o _line;
 ////////////////////////////////////////////////////////////////////////////////
 // Private Functions Head
 ////////////////////////////////////////////////////////////////////////////////
@@ -144,12 +152,27 @@ void StackTracer_Init() {
 	    Error("%s Signal Name: %s - Signal ID: %d", msgError, "SIGTERM", SIGTERM);
 	}
 	_StackTracer_Signal_Add(SIGTERM, "SIGTERM");
+	
+	_line.init = false; // inicializa o tracer line sempre como false
 }
 
 void StackTracer_Catch_Signal(const int signal) {
 	fprintf(stderr, "****************************************\n");
 	fprintf(stderr, "************* Stack Tracer *************\n");
 	fprintf(stderr, "****************************************\n");
+	
+	///////////////////////////////////////////////////////////////////////////////////////////
+	// imprime a linha que deu o erro, se utilizado o tracer line
+	///////////////////////////////////////////////////////////////////////////////////////////
+	if(_line.init == true)
+	{
+	//	fprintf(stderr, "****************************************\n");
+	//	fprintf(stderr, "************* Tracer Line  *************\n");
+	//	fprintf(stderr, "****************************************\n");
+		fprintf(stderr, "File: \"%s\"\n", _line.file);
+		fprintf(stderr, "Func: \"%s\"\n", _line.func);
+		fprintf(stderr, "Line: %d\n\n", _line.line);
+	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// imprime o nome do sinal se ele existir
@@ -173,6 +196,20 @@ int StackTracer_Get_MaxTrace() {
 	return _stackTracer_Max_Trace;
 }
 
+void StackTracer_Line(const char *file,
+	 				const char *func,
+					const int line)
+{
+	if(file == NULL) { Error("File is NULL"); }
+	if(func == NULL) { Error("Function is NULL"); }
+	if(line < 1)	 { Error("Line is lesser than 1.\nLine is %d", line); }
+	
+	_line.init = true;
+	
+	strncpy(_line.file, file, 256);
+	strncpy(_line.func, func, 256);
+	_line.line = line;
+}
 /*
 void StackTracer_Set_MaxTrace(const int maxTrace) {
 	if(maxTrace < 10) {

@@ -6,6 +6,7 @@
 // Test Functions Head
 ////////////////////////////////////////////////////////////////////////////////
 void test1();
+void test2();
 
 ////////////////////////////////////////////////////////////////////////////////
 // Functions for test
@@ -23,7 +24,8 @@ int func4 (void){ return 4; }
 int main (void) {
 	printf("Ow my God.\n");
   StackTracer_Init();
-  test1();
+//  test1();
+  test2();
   return 1;
 }
 
@@ -31,6 +33,9 @@ int main (void) {
 // Test Functions Body
 ////////////////////////////////////////////////////////////////////////////////
 void test1() {
+	printf("*********************\n");
+	printf("****** %s\n", __func__);
+	printf("*********************\n");
 	func1();
 	func2();
 	func3();
@@ -38,7 +43,16 @@ void test1() {
 	abort();
 }
 
-
+void test2() {
+	printf("*********************\n");
+	printf("****** %s\n", __func__);
+	printf("*********************\n");
+	_TL; func1();
+	_TL; func2();
+	_TL; abort();
+	_TL; func3();
+	_TL; func4();
+}
 
 
 

@@ -14,6 +14,7 @@ extern "C" {
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include <stdbool.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Includes - my shared libraries
@@ -34,6 +35,7 @@ extern "C" {
 
 #define StackTracer_Max_Signal 16
 
+#define _TL StackTracer_Line(__FILE__, __func__, __LINE__); 
 
 ////////////////////////////////////////////////////////////////////////////////
 // Structs
@@ -56,6 +58,7 @@ extern "C" {
 extern void StackTracer_Init();
 extern void StackTracer_Catch_Signal(const int signal);
 extern int  StackTracer_Get_MaxTrace();
+extern void StackTracer_Line(const char *file, const char *func, const int line);
 // void stackTracer_Set_MaxTrace(const int maxTrace);
 
 
