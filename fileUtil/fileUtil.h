@@ -51,8 +51,7 @@ char *FileUtil_Get_Line(FILE *file);
 
 
 /**
- * Abre um arquivo ou trata de um arquivo já aberto e insere todo o seu contéudo em um arranjo
- * e retorna ele.
+ * Abre um arquivo ou trata de um arquivo já aberto e insere todo o seu contéudo em uma string.
  * Ao final insere o character '\0'.
  * Ao final de todas as operações, o arquivo é fechado - fclose
  * O character EOF não é inserido no arranjo retornado.
