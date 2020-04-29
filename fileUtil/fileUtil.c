@@ -168,7 +168,38 @@ FileUtil_StrMap(const void *var,
 }
 
 
-
+int
+FileUtil_Get_Str(char *str,
+				 const long size,
+				 FILE *f)
+{
+	if(str == NULL) {
+		Error("Argument 1 of function, \"str\" is NULL.");
+	}
+	
+	if(size < 1) {
+		Error("Argument 2 of function, \"size\" is less than 1."
+		"size is %li", size);
+	}
+	
+	int i = 0;
+	for(; i < size-1; ++i)
+	{
+		str[i] = fgetc(f);
+		if(str[i] == '\0') { // encontra o fim da string
+			return 0;
+		}
+		
+		if(str[i] == EOF) { // encontra o fim do arquivo
+			str[i+1] = '\0';
+			return -1;
+		}
+	}
+	
+	// trata quando o tamanho da string não é suficiente até achar o fim da string
+	str[i] = '\0';
+	return 1;
+}
 
 
 
