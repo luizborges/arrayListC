@@ -219,7 +219,7 @@ char **Map_ArrayList_noSynckey(const void *_map, int *numKeys) {
 	
 	for(int i=0; i < *numKeys; ++i) { // copia cada key para o arranjo keys
 		Map_ArrayList_noSync_cell_t cell = (Map_ArrayList_noSync_cell_t)ArrayList_noSync_get(map->list, i);
-		keys[i] = (char*)MM_Malloc((strlen(cell->key) +1)*sizeof(char*)); // aloca espaço para o nome da key
+		keys[i] = (char*)MM_Malloc((strlen(cell->key) +1)*sizeof(char)); // aloca espaço para o nome da key
 		strcpy(keys[i], cell->key); // copia a célula para o arranjo
 	}
 	
