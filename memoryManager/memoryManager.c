@@ -4,13 +4,14 @@
 
 void MM_Init() {
 #ifdef GC_H
-	GC_INIT();
+	//GC_INIT();
 #endif
 }
 
 void *MM_Malloc(const size_t nbytes) {
 #ifdef GC_H
-	return GC_MALLOC(nbytes);
+	//return GC_MALLOC(nbytes);
+	return malloc(nbytes);
 #else
 	return malloc(nbytes);
 #endif
@@ -18,7 +19,8 @@ void *MM_Malloc(const size_t nbytes) {
 
 void *MM_Realloc(void *old, const size_t new_size) {
 #ifdef GC_H
-	return GC_REALLOC(old, new_size);
+	//return GC_REALLOC(old, new_size);
+	return realloc(old, new_size);
 #else
 	return realloc(old, new_size);
 #endif

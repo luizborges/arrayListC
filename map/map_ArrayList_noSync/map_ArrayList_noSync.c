@@ -107,6 +107,8 @@ void *Map_ArrayList_noSyncget (const void *_map, const char *key) {
 	}
 	map->lastAccessed = cell; // guarda a última célula acessada
 	map->lastAccessed_arrayIdx = arrayIdx; // guarda a posição da última célula acessada
+	fprintf(stderr, "%s::key is \"%s\" addr is %p\n",
+		__func__, map->lastAccessed->key, map->lastAccessed->key);
 	return cell->content;
 }
 
@@ -136,7 +138,7 @@ void *Map_ArrayList_noSyncset (void *_map, const char *key, const void *content)
 			Error("Map_ArrayList_noSync: alloc memory for cell.");
 		}
 		
-		cell->key = (char*)MM_Malloc(strlen(key) +1); // aloca espaço para a key do map
+		cell->key = (char*)MM_Malloc((strlen(key) +1)*sizeof(char)); // aloca espaço para a key do map
 		if(cell == NULL) {
 			Error("Map_ArrayList_noSync: alloc memory for key.");
 		}
@@ -154,6 +156,9 @@ void *Map_ArrayList_noSyncset (void *_map, const char *key, const void *content)
 	
 	map->lastAccessed = cell; // guarda a última célula acessada
 	map->lastAccessed_arrayIdx = arrayIdx; // guarda a posição da última célula acessada
+	
+	fprintf(stderr, "%s::key is \"%s\" addr is %p\n",
+		__func__, map->lastAccessed->key, map->lastAccessed->key);
 	
 	return contentOld;
 }
