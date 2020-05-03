@@ -29,6 +29,7 @@ void *MM_Realloc(void *old, const size_t new_size) {
 void MM_Free(void *ptr) {
 #ifdef GC_H
 	// GC_FREE(ptr); // DO NOTHING // quando é o gc que está sendo usado, o free não faz nada, usar o GC_FREE, se quiser forçar o deslocamento
+	free(ptr);
 #else
 	free(ptr);
 #endif
@@ -36,7 +37,7 @@ void MM_Free(void *ptr) {
 
 void MM_GC() {
 #ifdef GC_H
-	GC_gcollect(); // Explicitly force a garbage collection. 
+	//GC_gcollect(); // Explicitly force a garbage collection. 
 #endif
 }
 
