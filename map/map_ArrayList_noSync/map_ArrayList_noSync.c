@@ -107,8 +107,8 @@ void *Map_ArrayList_noSyncget (const void *_map, const char *key) {
 	}
 	map->lastAccessed = cell; // guarda a última célula acessada
 	map->lastAccessed_arrayIdx = arrayIdx; // guarda a posição da última célula acessada
-	fprintf(stderr, "%s::key is \"%s\" addr is %p\n",
-		__func__, map->lastAccessed->key, map->lastAccessed->key);
+	//fprintf(stderr, "%s::key is \"%s\" addr is %p\n",
+	//	__func__, map->lastAccessed->key, map->lastAccessed->key);
 	return cell->content;
 }
 
@@ -157,8 +157,8 @@ void *Map_ArrayList_noSyncset (void *_map, const char *key, const void *content)
 	map->lastAccessed = cell; // guarda a última célula acessada
 	map->lastAccessed_arrayIdx = arrayIdx; // guarda a posição da última célula acessada
 	
-	fprintf(stderr, "%s::key is \"%s\" addr is %p\n",
-		__func__, map->lastAccessed->key, map->lastAccessed->key);
+	//	fprintf(stderr, "%s(%d)::key is \"%s\" addr is %p\n",
+	//		__func__, __LINE__, map->lastAccessed->key, map->lastAccessed->key);
 	
 	return contentOld;
 }
