@@ -25,7 +25,7 @@ extern "C" {
 // Includes - posix
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || (defined (__APPLE__) && defined (__MACH__)) // Unix (Linux, *BSD, Mac OS X)
+#if defined(unix) || defined(__unix) || defined(__unix__) // Unix (Linux, *BSD, Mac OS X)
 #include <execinfo.h>
 #endif
 
